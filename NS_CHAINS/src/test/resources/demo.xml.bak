@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs>
+	<command id="唯一标识" queue="queuename" class="className" desc="command的描述" />
+	<group id="唯一标识">
+		<command id="唯一标识" queue="queuename" class="className" desc="command的描述" />
+		<ref name = "zzz" ref="command的唯一标识" desc="" />
+	</group>
+	<catalog id="catalog名称">
+		<command id="唯一标识" queue="queuename" class="className" desc="command的描述" />
+		<chain id="唯一标识">
+			<ref ref="command的唯一标识或者group的唯一标识" />
+			<ref ref="command的唯一标识或者group的唯一标识" />
+			<!--condition暂时不用else condition是获取传入的消息中的键值来做判断的 -->
+			<condition id="sndSmsFlag" cond="sndSmsFlag=='1'" desc="如果sndSmsFlag=1，需要下发短信">
+				<ref ref="command的唯一标识或者group的唯一标识" desc="下发短信通知"/>
+			</condition>
+		</chain>	
+	</catalog>
+</catalogs>﻿

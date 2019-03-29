@@ -1,0 +1,236 @@
+package com.creditease.ns.log.converter;
+
+
+import ch.qos.logback.classic.pattern.MessageConverter;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.creditease.ns.log.FuqianlaLogConstants;
+import com.creditease.ns.log.LogConstants;
+import com.creditease.ns.log.spi.FuqianlaLogger;
+import org.slf4j.MDC;
+
+import java.net.Inet4Address;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class FuqianlaMessageConverter extends MessageConverter {
+	private static String ip;
+	private static String hostName;
+	
+	@Override
+	public String convert(ILoggingEvent event) {
+		String message = super.convert(event);
+		if(message == null){
+			return "";
+		}
+		if(!event.getLoggerName().equals(FuqianlaLogger.class.getName()))
+		{
+			return message;
+		}
+
+		boolean endWithEnter = message.endsWith(LogConstants.LINUX_EOL);
+		StringTokenizer stringTokenizer = new StringTokenizer(message,"\r\n");
+		int tokenCounts = stringTokenizer.countTokens();
+//		String[] stringLines = message.split(LogConstants.WIN_LINUX_EOL_REG);
+
+
+//		if(tokenCounts == 1){
+//			return message;
+//		}
+
+		StringBuilder sb = new StringBuilder();
+
+		String prefix = buildLogPrefix();
+		
+		
+		
+		int i = 1;
+		while (stringTokenizer.hasMoreElements()) 
+		{
+			String stringLine = (String) stringTokenizer.nextElement();
+			
+			//long startTime = System.currentTimeMillis();
+		
+			//System.out.println("[构造日志前缀] [cost:"+(System.currentTimeMillis()-startTime)+"ms]");
+			if(stringLine.endsWith(" "))
+//				sb.append(LogConstants.PART_SPLIT).append(stringLine).append(prefix);
+				sb.append("||").append(stringLine).append(prefix);
+			else 
+			{
+//				sb.append(LogConstants.PART_SPLIT).append(stringLine).append(" ").append(prefix);
+				sb.append("||").append(stringLine).append("||").append(prefix);
+			}
+			if(i < tokenCounts){
+				sb.append(LogConstants.WIN_EOL);
+			}else {
+				if(endWithEnter){
+					sb.append(LogConstants.WIN_EOL);
+				}
+			}
+
+			i++;
+		}
+		
+		return sb.toString();
+
+	}
+
+	private String buildLogPrefix()
+	{
+		//long startTime = System.currentTimeMillis();
+		StringBuilder stringBuilder = new StringBuilder();
+		String prefix = "";
+		String tail = "";
+
+		logContentStart(stringBuilder, FuqianlaLogConstants.MDC_KEY_ORDERID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_MERCHID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_APPID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TXNID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_OUTTXNID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTXNID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_PMTPRODCODE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TUNNELCODE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_PMTCHANNELCODE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TRACKID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TAKETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_CCY, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_AMOUNT, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_REFUNDAMOUNT, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_STATUS, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_CHECKSTATUS, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TIMEEXPIRE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_RETCODE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_RETINFO, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_GOODSNAME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_GOODSDESC, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_RETURNURL, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_NOTIFYURL, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_PARTNER, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_OPTIONAL, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_CLIENTIP, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_DEVICE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_LIVEMODE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_SIGNTYPE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_SDKMARK, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_RECEIVETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_TRADETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_NOTIFYTIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_COMPLETETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXCOMPLETETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_UPDATETIME, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_SETTLEPERIOD, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_SETTLERATE, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_QRCODEID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_BIZTP, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_VERSION, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTRADEID, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXBANKBILLNO, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTRAFIELD, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_REMARK, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND1, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND2, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND3, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND4, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND5, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND6, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND7, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND8, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND9, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND10, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND11, prefix, tail);
+		logContentAppend(stringBuilder, FuqianlaLogConstants.MDC_KEY_EXTEND12, prefix, tail);
+		if (ip == null) 
+		{
+			try {
+				Enumeration<NetworkInterface>  networkInterfaces = NetworkInterface.getNetworkInterfaces();
+				boolean isFindIp = false;
+				String s = "e\\w+0";
+				Pattern p = Pattern.compile(s);
+				while (networkInterfaces.hasMoreElements()) {  
+					NetworkInterface item = networkInterfaces.nextElement(); 
+					String devName = item.getDisplayName();
+					if(devName == null)
+					{
+						continue;
+					}
+					Matcher m = p.matcher(devName);
+					boolean isNeedDev = m.matches();
+					
+					if(!item.isLoopback() && isNeedDev)
+					{
+						for (InterfaceAddress address : item.getInterfaceAddresses()) {   
+							if (address.getAddress() instanceof Inet4Address) {   
+								Inet4Address inet4Address = (Inet4Address) address.getAddress();   
+								if (!inet4Address.isLoopbackAddress() && !inet4Address.isMulticastAddress()) 
+								{
+									String ip = inet4Address.getHostAddress();
+									this.ip = ip;
+									stringBuilder.append("||");
+									stringBuilder.append(prefix).append(ip).append(tail);
+									isFindIp = true;
+									if (hostName == null) 
+									{
+										hostName = inet4Address.getHostName();
+									}
+									break;
+									
+								}
+							}   
+						}   
+					}
+					
+					if (isFindIp) 
+					{
+						break;
+					}
+	
+				}
+			} catch (SocketException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				String ip = "unknownhost";
+				stringBuilder.append("||");
+				stringBuilder.append(prefix).append(ip).append(tail);
+				return stringBuilder.toString();
+			}
+		}
+		else 
+		{
+			stringBuilder.append("||");
+			stringBuilder.append(prefix).append(ip).append(tail);
+		}
+		
+		stringBuilder.append("||");
+		stringBuilder.append(prefix).append(UUID.randomUUID()).append(tail);
+		
+
+		if(hostName != null) 
+		{
+			stringBuilder.append("||");
+			stringBuilder.append(prefix).append(hostName).append(tail);
+		}
+		
+
+		return stringBuilder.toString();
+	}
+
+	private void logContentAppend(StringBuilder stringBuilder, String logKey, String prefix,
+			String tail) {
+		stringBuilder.append("||");
+		String appendString = MDC.get(logKey); 
+		stringBuilder.append(prefix).append((appendString == null ? "" : appendString)).append(tail);
+	}
+
+	
+	private void logContentStart(StringBuilder stringBuilder, String logKey, String prefix,
+			String tail) {
+		String appendString = MDC.get(logKey); 
+		stringBuilder.append(prefix).append((appendString == null ? "" : appendString)).append(tail);
+	}
+
+}

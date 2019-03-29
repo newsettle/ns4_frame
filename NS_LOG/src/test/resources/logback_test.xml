@@ -1,0 +1,34 @@
+<configuration>
+    <conversionRule conversionWord="prefixcontent"
+                    converterClass="com.creditease.ns.log.converter.NewlLineMessageConverter"/>
+  
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd;HH:mm:ss.SSS} [%thread]%prefixcontent%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+<!--     <appender name="PROCESS_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>process.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>process.%d{yyyyMMddHH}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+    <logger name="com.creditease.ns.log.spi.SimpleLogger" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger> -->
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

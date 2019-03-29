@@ -1,0 +1,100 @@
+<configuration>
+
+    <conversionRule conversionWord="exp"
+                    converterClass="com.creditease.ns.log.converter.NSThrowableConvert"/>
+	<conversionRule conversionWord="cl"
+		converterClass="com.creditease.ns.log.converter.ClassNameAndLineNumberConverter" />
+	<conversionRule conversionWord="nmsg"
+		converterClass="com.creditease.ns.log.converter.NSMessageContentConverter" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- configfile名字不能缺少,日志框架会自动将其替换为启动时对应的configfile参数值(不包含文件后缀) -->
+	<appender name="FRAM" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+		<file>./log/configfile_fram.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>./log/configfile_fram.%d{yyyyMMddHH}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FLOW" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+		<file>./log/configfile_flow.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>./log/configfile_flow.%d{yyyyMMddHH}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>	
+	
+	<appender name="MQ" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+		<file>./log/configfile_mq.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>./log/configfile_mq.%d{yyyyMMddHH}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>	
+	
+	<appender name="TASK" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+		<file>./log/configfile_task.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>./log/configfile_task.%d{yyyyMMddHH}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>	
+	
+	<appender name="BIZ" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+		<file>./log/configfile_biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>./log/configfile_biz.%d{yyyyMMddHH}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MMddHHmmss.SSS} [%t] %.-1level %cl %nmsg %exp%n</pattern>
+		</encoder>
+	</appender>		 
+
+	<logger name="ns.fram" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FRAM" />
+	</logger>
+	
+ 	<logger name="ns.flow" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FLOW" />
+	</logger>
+	
+	<logger name="ns.mq" level="DEBUG" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="MQ" />
+	</logger>
+	
+	<logger name="ns.task" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="TASK" />
+	</logger>
+	
+	<logger name="ns.biz" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="BIZ" />
+	</logger> 
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

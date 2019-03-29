@@ -1,0 +1,69 @@
+package com.creditease.ns.log;
+
+/**
+ * Date: 15-5-27
+ * Time: 下午12:24
+ */
+public class FuqianlaLogConstants {
+
+
+    public static final String MDC_KEY_ORDERID = "orderId";
+    public static final String MDC_KEY_MERCHID = "merchId";
+    public static final String MDC_KEY_APPID = "appId";
+    public static final String MDC_KEY_TXNID = "txnId";
+    public static final String MDC_KEY_OUTTXNID = "outTxnId";
+    public static final String MDC_KEY_EXTXNID = "exTxnId";
+    public static final String MDC_KEY_PMTPRODCODE = "pmtProdCode";
+    public static final String MDC_KEY_TUNNELCODE = "tunnelCode";
+    public static final String MDC_KEY_PMTCHANNELCODE = "pmtChannelCode";
+    public static final String MDC_KEY_TRACKID = "trackId";
+    public static final String MDC_KEY_TAKETIME = "takeTime";
+    public static final String MDC_KEY_CCY = "ccy";
+    public static final String MDC_KEY_AMOUNT = "amount";
+    public static final String MDC_KEY_REFUNDAMOUNT = "refundAmount";
+    public static final String MDC_KEY_STATUS = "status";
+    public static final String MDC_KEY_CHECKSTATUS = "checkStatus";
+    public static final String MDC_KEY_TIMEEXPIRE = "timeExpire";
+    public static final String MDC_KEY_RETCODE = "retCode";
+    public static final String MDC_KEY_RETINFO = "retInfo";
+    public static final String MDC_KEY_GOODSNAME = "goodsName";
+    public static final String MDC_KEY_GOODSDESC = "goodsDesc";
+    public static final String MDC_KEY_RETURNURL = "returnUrl";
+    public static final String MDC_KEY_NOTIFYURL = "notifyUrl";
+    public static final String MDC_KEY_PARTNER = "partner";
+    public static final String MDC_KEY_OPTIONAL = "optional";
+    public static final String MDC_KEY_CLIENTIP = "clientIp";
+    public static final String MDC_KEY_DEVICE = "device";
+    public static final String MDC_KEY_LIVEMODE = "liveMode";
+    public static final String MDC_KEY_SIGNTYPE = "signType";
+    public static final String MDC_KEY_SDKMARK = "sdkMark";
+    public static final String MDC_KEY_RECEIVETIME = "receiveTime";
+    public static final String MDC_KEY_TRADETIME = "tradeTime";
+    public static final String MDC_KEY_NOTIFYTIME = "notifyTime";
+    public static final String MDC_KEY_COMPLETETIME = "completeTime";
+    public static final String MDC_KEY_EXCOMPLETETIME = "exCompleteTime";
+    public static final String MDC_KEY_UPDATETIME = "updateTime";
+    public static final String MDC_KEY_SETTLEPERIOD = "settlePeriod";
+    public static final String MDC_KEY_SETTLERATE = "settleRate";
+    public static final String MDC_KEY_QRCODEID = "qrcodeId";
+    public static final String MDC_KEY_BIZTP = "bizTp";
+    public static final String MDC_KEY_VERSION = "version";
+    public static final String MDC_KEY_EXTRADEID = "exTradeId";
+    public static final String MDC_KEY_EXBANKBILLNO = "exBankBillNo";
+    public static final String MDC_KEY_EXTRAFIELD = "extraField";
+    public static final String MDC_KEY_REMARK = "remark";
+    public static final String MDC_KEY_EXTEND1 = "extend1";
+    public static final String MDC_KEY_EXTEND2 = "extend2";
+    public static final String MDC_KEY_EXTEND3 = "extend3";
+    public static final String MDC_KEY_EXTEND4 = "extend4";
+    public static final String MDC_KEY_EXTEND5 = "extend5";
+    public static final String MDC_KEY_EXTEND6 = "extend6";
+    public static final String MDC_KEY_EXTEND7 = "extend7";
+    public static final String MDC_KEY_EXTEND8 = "extend8";
+    public static final String MDC_KEY_EXTEND9 = "extend9";
+    public static final String MDC_KEY_EXTEND10 = "extend10";
+    public static final String MDC_KEY_EXTEND11 = "extend11";
+    public static final String MDC_KEY_EXTEND12 = "extend12";
+
+
+}

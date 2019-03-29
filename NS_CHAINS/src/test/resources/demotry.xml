@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs desc="测试try">
+	<catalog id="testtry" desc="测试try">
+		<chain id="trychain" desc="测试try">
+			<tryBlock desc="测试try">
+			<command id="trycommand1" class="com.crediteease.test.trycatch.TestTryCommand1"
+					desc="tryCommand1" />
+					
+			<!-- 	<command id="trycommand2" class="com.crediteease.test.trycatch.TestTryCommand2"
+					desc="trycommand2" />
+					
+				<command id="trycommand3" class="com.crediteease.test.trycatch.TestTryCommand3"
+					desc="trycommand3" /> -->
+			
+	 			<tryBlock desc="测试嵌套try">
+					
+					<command id="trycommand2" class="com.crediteease.test.trycatch.TestTryCommand2"
+						desc="trycommand2" />
+						
+					<command id="trycommand3" class="com.crediteease.test.trycatch.TestTryCommand3"
+						desc="trycommand3" />
+				
+				
+						<catchBlock desc="测试try">
+			<!-- 		<command id="catchcommand1" class="com.crediteease.test.trycatch.TestCatchCommand1"
+						desc="catchcommand1" /> -->
+						
+					<command id="catchcommand2" class="com.crediteease.test.trycatch.TestCatchCommand2"
+						desc="catchcommand2" />
+						
+					<command id="catchcommand3" class="com.crediteease.test.trycatch.TestCatchCommand3"
+						desc="catchcommand3" />
+				</catchBlock>
+				<finallyBlock desc="测试try">
+					<command id="finallycommand1" class="com.crediteease.test.trycatch.TestFinallyCommand1"
+						desc="finallycommand1" />
+						
+					<command id="finallycommand2" class="com.crediteease.test.trycatch.TestFinallyCommand2"
+						desc="finallycommand2" />
+						
+					<command id="finallycommand3" class="com.crediteease.test.trycatch.TestFinallyCommand3"
+						desc="finallycommand3" />
+				
+				</finallyBlock>
+				
+				
+				</tryBlock>
+				
+		
+					
+					
+			<catchBlock desc="测试try">
+					<command id="catchcommand1" class="com.crediteease.test.trycatch.TestCatchCommand1"
+						desc="catchcommand1" />
+						
+				<!-- 	<command id="catchcommand2" class="com.crediteease.test.trycatch.TestCatchCommand2"
+						desc="catchcommand2" />
+						
+					<command id="catchcommand3" class="com.crediteease.test.trycatch.TestCatchCommand3"
+						desc="catchcommand3" /> -->
+				</catchBlock>
+				<!-- <finallyBlock desc="测试try">
+					<command id="finallycommand1" class="com.crediteease.test.trycatch.TestFinallyCommand1"
+						desc="finallycommand1" />
+						
+					<command id="finallycommand2" class="com.crediteease.test.trycatch.TestFinallyCommand2"
+						desc="finallycommand2" />
+						
+					<command id="finallycommand3" class="com.crediteease.test.trycatch.TestFinallyCommand3"
+						desc="finallycommand3" />
+				
+				</finallyBlock> -->
+			
+			</tryBlock>
+		</chain>
+	</catalog>
+
+
+
+</catalogs>

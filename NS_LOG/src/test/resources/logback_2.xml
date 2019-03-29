@@ -1,0 +1,128 @@
+<configuration>
+    <conversionRule conversionWord="exp"
+                    converterClass="com.creditease.ns.log.converter.NSThrowableConvert"/>
+    <conversionRule conversionWord="msgHead"
+                    converterClass="com.creditease.ns.log.converter.NSMessageConverter"/>
+    <conversionRule conversionWord="ln"
+                    converterClass="com.creditease.ns.log.converter.GetLineNumberConverter"/>
+    <conversionRule conversionWord="cls"
+                    converterClass="com.creditease.ns.log.converter.ClassNameConverter"/>
+    <!-- add by dingzhiwei -->
+    <conversionRule conversionWord="cl"
+                    converterClass="com.creditease.ns.log.converter.ClassNameAndLineNumberConverter"/>
+    <conversionRule conversionWord="nmsg"
+                    converterClass="com.creditease.ns.log.converter.NSMessageContentConverter"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{MMddHHmmss.SSS} [%t] %cl %nmsg %exp%n</pattern>
+            <!-- <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern> -->
+        </encoder>
+    </appender>
+
+    <appender name="PERF4J_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="PROCESS_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>process.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>process.%d{yyyyMMddHH}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>error.%d{yyyyMMddHH}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DEBUG_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>debug.%d{yyyyMMddHH}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="PERFORM_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>perform.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>perform.%d{yyyyMMddHH}.log</fileNamePattern>
+            <!-- 如果按天来回滚，则最大保存时间为3天，3天之前的都将被清理掉 -->
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="INFORMATION_LOG_FILE" class="com.creditease.ns.log.appender.NSLogRollingFileAppender">
+        <File>information.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>information.%d{yyyyMMddHH}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msgHead - [%thread][%cls{0}:%ln] %exp%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+    <appender name="CoalescingStatistics"
+              class="org.perf4j.logback.AsyncCoalescingStatisticsAppender">
+        <!--
+          The TimeSlice option is used to determine the time window for which
+          all received StopWatch logs are aggregated to create a single
+          GroupedTimingStatistics log. Here we set it to 10 seconds, overriding
+          the default of 30000 ms
+        -->
+        <param name="TimeSlice" value="10000"/>
+        <appender-ref ref="PERFORM_LOG_FILE"/>
+        <appender-ref ref="PERF4J_STDOUT"/>
+    </appender>
+
+
+    <logger name="processLog" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="PROCESS_LOG_FILE"/>
+    </logger>
+
+    <logger name="errorLog" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ERROR_LOG_FILE"/>
+    </logger>
+
+    <logger name="debugLog" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG_LOG_FILE"/>
+    </logger>
+
+    <logger name="infoLog" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFORMATION_LOG_FILE"/>
+    </logger>
+
+    <!--性能日志用 -->
+    <logger name="org.perf4j.TimingLogger" level="INFO" additivity="false">
+        <appender-ref ref="CoalescingStatistics"/>
+    </logger>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

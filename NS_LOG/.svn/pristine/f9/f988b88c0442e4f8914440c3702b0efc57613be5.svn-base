@@ -1,0 +1,409 @@
+package com.creditease.ns.log.spi;
+
+import ch.qos.logback.classic.LoggerContext;
+import com.creditease.generator.redis.RedisIdGenerator;
+import com.creditease.ns.log.FuqianlaLogConstants;
+import com.creditease.ns.log.converter.Constants;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+import java.util.HashMap;
+
+public class FuqianlaLogger {
+    private static Logger logger = LoggerFactory.getLogger(FuqianlaLogger.class);
+    private static FuqianlaLogger simpleLogger = new FuqianlaLogger();
+
+    public static FuqianlaLogger getLoggerSetting() {
+        return simpleLogger;
+    }
+
+    private FuqianlaLogger() {
+
+    }
+
+    public static void log(String modulName, String msg) {
+        LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+        try {
+            if ("true".equals(loggerContext.getProperty(Constants.IS_USE_REDIS_ID_GENERATOR_KEY))) {
+                RedisIdGenerator idGenerator = RedisIdGenerator.getInstance();
+                String id = idGenerator.next();
+                if (!StringUtils.isEmpty(id)) {
+                    MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND4, id);
+                }
+            }
+        } catch (Throwable t) {
+
+        }
+        logger.info("{}||{}", modulName, msg);
+    }
+
+
+//	private void setLocalHost()
+//	{
+//		try
+//		{
+//			InetAddress addr;
+//			addr = InetAddress.getLocalHost();
+//			String ip = addr.getHostAddress();
+//		}
+//		catch(Exception e)
+//		{
+//
+//		}
+//		finally
+//		{
+//			return
+//		}
+//	}
+
+
+    public FuqianlaLogger setOrderId(String orderId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_ORDERID, orderId);
+        return this;
+    }
+
+    public FuqianlaLogger setMerchId(String merchId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_MERCHID, merchId);
+        return this;
+    }
+
+    public FuqianlaLogger setAppId(String appId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_APPID, appId);
+        return this;
+    }
+
+    public FuqianlaLogger setTxnId(String txnId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TXNID, txnId);
+        return this;
+    }
+
+    public FuqianlaLogger setOutTxnId(String outTxnId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_OUTTXNID, outTxnId);
+        return this;
+    }
+
+    public FuqianlaLogger setExTxnId(String exTxnId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTXNID, exTxnId);
+        return this;
+    }
+
+    public FuqianlaLogger setPmtProdCode(String pmtProdCode) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_PMTPRODCODE, pmtProdCode);
+        return this;
+    }
+
+    public FuqianlaLogger setTunnelCode(String tunnelCode) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TUNNELCODE, tunnelCode);
+        return this;
+    }
+
+    public FuqianlaLogger setPmtChannelCode(String pmtChannelCode) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_PMTCHANNELCODE, pmtChannelCode);
+        return this;
+    }
+
+    public FuqianlaLogger setTrackId(String trackId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TRACKID, trackId);
+        return this;
+    }
+
+    public FuqianlaLogger setTakeTime(String takeTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TAKETIME, takeTime);
+        return this;
+    }
+
+    public FuqianlaLogger setCcy(String ccy) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_CCY, ccy);
+        return this;
+    }
+
+    public FuqianlaLogger setAmount(String amount) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_AMOUNT, amount);
+        return this;
+    }
+
+    public FuqianlaLogger setRefundAmount(String refundAmount) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_REFUNDAMOUNT, refundAmount);
+        return this;
+    }
+
+    public FuqianlaLogger setStatus(String status) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_STATUS, status);
+        return this;
+    }
+
+    public FuqianlaLogger setCheckStatus(String checkStatus) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_CHECKSTATUS, checkStatus);
+        return this;
+    }
+
+    public FuqianlaLogger setTimeExpire(String timeExpire) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TIMEEXPIRE, timeExpire);
+        return this;
+    }
+
+    public FuqianlaLogger setRetCode(String retCode) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_RETCODE, retCode);
+        return this;
+    }
+
+    public FuqianlaLogger setRetInfo(String retInfo) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_RETINFO, retInfo);
+        return this;
+    }
+
+    public FuqianlaLogger setGoodsName(String goodsName) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_GOODSNAME, goodsName);
+        return this;
+    }
+
+    public FuqianlaLogger setGoodsDesc(String goodsDesc) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_GOODSDESC, goodsDesc);
+        return this;
+    }
+
+    public FuqianlaLogger setReturnUrl(String returnUrl) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_RETURNURL, returnUrl);
+        return this;
+    }
+
+    public FuqianlaLogger setNotifyUrl(String notifyUrl) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_NOTIFYURL, notifyUrl);
+        return this;
+    }
+
+    public FuqianlaLogger setPartner(String partner) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_PARTNER, partner);
+        return this;
+    }
+
+    public FuqianlaLogger setOptional(String optional) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_OPTIONAL, optional);
+        return this;
+    }
+
+    public FuqianlaLogger setClientIp(String clientIp) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_CLIENTIP, clientIp);
+        return this;
+    }
+
+    public FuqianlaLogger setDevice(String device) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_DEVICE, device);
+        return this;
+    }
+
+    public FuqianlaLogger setLiveMode(String liveMode) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_LIVEMODE, liveMode);
+        return this;
+    }
+
+    public FuqianlaLogger setSignType(String signType) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_SIGNTYPE, signType);
+        return this;
+    }
+
+    public FuqianlaLogger setSdkMark(String sdkMark) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_SDKMARK, sdkMark);
+        return this;
+    }
+
+    public FuqianlaLogger setReceiveTime(String receiveTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_RECEIVETIME, receiveTime);
+        return this;
+    }
+
+    public FuqianlaLogger setTradeTime(String tradeTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_TRADETIME, tradeTime);
+        return this;
+    }
+
+    public FuqianlaLogger setNotifyTime(String notifyTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_NOTIFYTIME, notifyTime);
+        return this;
+    }
+
+    public FuqianlaLogger setCompleteTime(String completeTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_COMPLETETIME, completeTime);
+        return this;
+    }
+
+    public FuqianlaLogger setExCompleteTime(String exCompleteTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXCOMPLETETIME, exCompleteTime);
+        return this;
+    }
+
+    public FuqianlaLogger setUpdateTime(String updateTime) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_UPDATETIME, updateTime);
+        return this;
+    }
+
+    public FuqianlaLogger setSettlePeriod(String settlePeriod) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_SETTLEPERIOD, settlePeriod);
+        return this;
+    }
+
+    public FuqianlaLogger setSettleRate(String settleRate) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_SETTLERATE, settleRate);
+        return this;
+    }
+
+    public FuqianlaLogger setQrcodeId(String qrcodeId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_QRCODEID, qrcodeId);
+        return this;
+    }
+
+    public FuqianlaLogger setBizTp(String bizTp) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_BIZTP, bizTp);
+        return this;
+    }
+
+    public FuqianlaLogger setVersion(String version) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_VERSION, version);
+        return this;
+    }
+
+    public FuqianlaLogger setExTradeId(String exTradeId) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTRADEID, exTradeId);
+        return this;
+    }
+
+    public FuqianlaLogger setExBankBillNo(String exBankBillNo) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXBANKBILLNO, exBankBillNo);
+        return this;
+    }
+
+    public FuqianlaLogger setExtraField(String extraField) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTRAFIELD, extraField);
+        return this;
+    }
+
+    public FuqianlaLogger setRemark(String remark) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_REMARK, remark);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend1(String extend1) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND1, extend1);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend2(String extend2) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND2, extend2);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend3(String extend3) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND3, extend3);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend4(String extend4) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND4, extend4);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend5(String extend5) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND5, extend5);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend6(String extend6) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND6, extend6);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend7(String extend7) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND7, extend7);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend8(String extend8) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND8, extend8);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend9(String extend9) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND9, extend9);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend10(String extend10) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND10, extend10);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend11(String extend11) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND11, extend11);
+        return this;
+    }
+
+    public FuqianlaLogger setExtend12(String extend12) {
+
+        MDC.put(FuqianlaLogConstants.MDC_KEY_EXTEND12, extend12);
+        return this;
+    }
+
+    public static void reset() {
+//		MDC.clear();
+        MDC.setContextMap(new HashMap<String, String>());
+    }
+
+}

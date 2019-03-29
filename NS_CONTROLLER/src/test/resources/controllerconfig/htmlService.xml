@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs desc="网页跳转服务">
+
+	<catalog id="aliPayImmediately_simple" contentType="html" desc="支付宝及时到账">
+		<chain id="aLiLimitPayChain">
+           <publish queueName="AliPayImmediatelyServiceQueue" desc="查询状态不明数据"/>
+		</chain>
+	</catalog>
+
+	<catalog id="AliReturnUrl_simple" contentType="html" desc="支付宝returnUrl">
+		<chain id="AliReturnUrlChain">
+           <publish queueName="AliReturnUrlServiceQueue" desc="阿里返回url"/>
+		</chain>
+	</catalog>
+
+	<command id="testa" class="com.creditease.ns.controller.test.TestACommand"
+			 desc="testa" />
+	<catalog id="testHtml" desc="测试专用">
+		<chain id="testService_ChainA">
+			<ref ref="testa" desc="testaa" />
+		</chain>
+	</catalog>
+	
+</catalogs>

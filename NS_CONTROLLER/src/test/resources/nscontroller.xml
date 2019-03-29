@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queues>
+	<launchers>
+		<launcher>
+			<class name="com.creditease.ns.controller.startup.BaseLauncher" method="startUp" />
+		</launcher>
+	</launchers>
+	<inqueues>
+		<queue>
+			<name>controller</name>
+			<buffersize>100</buffersize>
+			<handlersize>10</handlersize>
+			<serviceClass>com.creditease.ns.controller.transporter.service.ControllerService</serviceClass>
+		</queue>
+	</inqueues>
+</queues>

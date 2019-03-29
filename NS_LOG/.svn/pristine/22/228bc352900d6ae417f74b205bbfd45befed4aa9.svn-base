@@ -1,0 +1,389 @@
+package com.creditease.ns.log.spi;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.Context;
+
+import com.creditease.generator.redis.RedisIdGenerator;
+import com.creditease.ns.log.LogConstants;
+import com.creditease.ns.log.converter.Constants;
+
+public class SimpleLogger 
+{	
+    private static Logger logger = LoggerFactory.getLogger(SimpleLogger.class);
+	private static SimpleLogger simpleLogger = new SimpleLogger();
+	
+	public static SimpleLogger getLoggerSetting()
+	{
+		return simpleLogger;
+	}
+	
+	private SimpleLogger()
+	{
+		
+	}
+	
+	public static void log(String modulName,String msg)
+	{
+		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+		try
+		{
+			if("true".equals(loggerContext.getProperty(Constants.IS_USE_REDIS_ID_GENERATOR_KEY)))
+			{
+				RedisIdGenerator idGenerator = RedisIdGenerator.getInstance();
+				String id = idGenerator.next();
+				if(!StringUtils.isEmpty(id))
+				{
+					MDC.put(LogConstants.MDC_KEY_EXD4, id);
+				}
+			}
+		}
+		catch(Throwable t)
+		{
+			
+		}
+		logger.info("{}||{}",modulName,msg);
+	}
+
+
+	public SimpleLogger setTxnId(String txnId) {
+		
+		MDC.put(LogConstants.MDC_KEY_TXNID, txnId);
+		return this;
+	}
+
+
+	public SimpleLogger  setOrderId(String orderId) {
+		MDC.put(LogConstants.MDC_KEY_ORDERID, orderId);
+		return this;
+	}
+
+
+	public SimpleLogger setSystemOrderId(String systemOrderId) {
+		MDC.put(LogConstants.MDC_KEY_SYSTEMORDERID, systemOrderId);
+		return this;
+	}
+
+
+	public SimpleLogger setBatchId(String batchId) {
+		MDC.put(LogConstants.MDC_KEY_BATCHID, batchId);
+		return this;
+	}
+
+
+	public SimpleLogger setTradeStatus(String tradeStatus) {
+		MDC.put(LogConstants.MDC_KEY_TRADESTATUS, tradeStatus);
+		return this;
+	}
+
+
+	public SimpleLogger setResponseCodeMess(String responseCodeMess) {
+		MDC.put(LogConstants.MDC_KEY_RESPONSECODEMESS, responseCodeMess);
+		return this;
+	}
+	
+
+	public SimpleLogger setResponseCode(String responseCode) {
+		MDC.put(LogConstants.MDC_KEY_RESPONSECODE, responseCode);
+		return this;
+	}
+
+
+	public SimpleLogger setMerchantId(String merchantId) {
+		MDC.put(LogConstants.MDC_KEY_MERCHANTID, merchantId);
+		return this;
+	}
+
+	public SimpleLogger setChannelMerchantId(String channelMerchantId) {
+		MDC.put(LogConstants.MDC_KEY_CHANNELMERCHANTID, channelMerchantId);
+		return this;
+	}
+
+
+	public SimpleLogger setChannelName(String channelName) {
+		MDC.put(LogConstants.MDC_KEY_CHANNELNAME, channelName);
+		return this;
+	}
+
+
+	public SimpleLogger setPayType(String payType) {
+		MDC.put(LogConstants.MDC_KEY_PAYTYPE, payType);
+		return this;
+	}
+	
+	public SimpleLogger setTxnType(String txnType) {
+		MDC.put(LogConstants.MDC_KEY_TXNTYPE, txnType);
+		return this;
+	}
+
+
+	public SimpleLogger setUpdateTime(String updateTime) {
+		MDC.put(LogConstants.MDC_KEY_UPDATETIME, updateTime);
+		return this;
+	}
+
+	public SimpleLogger setRemark(String remark) {
+		MDC.put(LogConstants.MDC_KEY_REMARK, remark);
+		return this;
+	}
+
+
+	public SimpleLogger setErrorDesp(String errorDesp) {
+		MDC.put(LogConstants.MDC_KEY_ERRORDESP, errorDesp);
+		return this;
+	}
+
+
+	public SimpleLogger setChkStatus(String chkSts) {
+		MDC.put(LogConstants.MDC_KEY_CHKSTATUS, chkSts);
+		return this;
+	}
+	
+	public SimpleLogger setOperatorId(String operatorId) {
+		MDC.put(LogConstants.MDC_KEY_OPERATORID, operatorId);
+		return this;
+	}
+	
+	public SimpleLogger setThirdHeadCode(String thirdHeadCode) {
+		MDC.put(LogConstants.MDC_KEY_THIRDHEADCODE, thirdHeadCode);
+		return this;
+	}
+
+
+	public SimpleLogger setThirdHeadMsg(String thirdHeadMsg) {
+		MDC.put(LogConstants.MDC_KEY_THIRDHEADMSG, thirdHeadMsg);
+		return this;
+	}
+	
+	
+	public SimpleLogger setThirdBodyMsg(String thirdBodyMsg) {
+		MDC.put(LogConstants.MDC_KEY_THIRDBODYMSG, thirdBodyMsg);
+		return this;
+	}
+	
+	public SimpleLogger setThirdBodyCode(String thirdBodyCode) {
+		MDC.put(LogConstants.MDC_KEY_THIRDBODYCODE, thirdBodyCode);
+		return this;
+	}
+
+
+	public SimpleLogger setchanId(String chanId) {
+		MDC.put(LogConstants.MDC_KEY_CHANID, chanId);
+		return this;
+	}
+	
+	public SimpleLogger setSttlAmt(String sttlAmt) {
+		MDC.put(LogConstants.MDC_KEY_STTLAMT, sttlAmt);
+		return this;
+	}
+	
+	public SimpleLogger setActualSttlAmt(String actualSttlAmt) {
+		MDC.put(LogConstants.MDC_KEY_ACTUALSTTLAMT, actualSttlAmt);
+		return this;
+	}
+	
+	public SimpleLogger setSplitFlg(String splitFlg) {
+		MDC.put(LogConstants.MDC_KEY_SPLITFLG, splitFlg);
+		return this;
+	}
+	
+	public SimpleLogger setProcSts(String procSts) {
+		MDC.put(LogConstants.MDC_KEY_PROCSTS, procSts);
+		return this;
+	}
+	
+	public SimpleLogger setNotifyUrl(String notifyUrl) {
+		MDC.put(LogConstants.MDC_KEY_NOTIFYURL, notifyUrl);
+		return this;
+	}
+	
+	public SimpleLogger setOutTxnId(String outTxnId) {
+		MDC.put(LogConstants.MDC_KEY_OUTTXNID, outTxnId);
+		return this;
+	}
+	
+	public SimpleLogger setExTxnTd(String exTxnTd) {
+		MDC.put(LogConstants.MDC_KEY_EXTXNTD, exTxnTd);
+		return this;
+	}
+	
+	public SimpleLogger setCaptureTime(String captureTime) {
+		MDC.put(LogConstants.MDC_KEY_CAPTURETIME, captureTime);
+		return this;
+	}
+	
+	public SimpleLogger setExeTime(String exeTime) {
+		MDC.put(LogConstants.MDC_KEY_EXETIME, exeTime);
+		return this;
+	}
+	
+	public SimpleLogger setTraceTime(String traceTime) {
+		MDC.put(LogConstants.MDC_KEY_TRACETIME, traceTime);
+		return this;
+	}
+	
+	public SimpleLogger setReserveTm(String reserveTm) {
+		MDC.put(LogConstants.MDC_KEY_RESERVETM, reserveTm);
+		return this;
+	}
+	
+	public SimpleLogger setNsAccSttlDt(String nsAccSttlDt) {
+		MDC.put(LogConstants.MDC_KEY_NSACCSTTLDT, nsAccSttlDt);
+		return this;
+	}
+	
+	public SimpleLogger setNsSttlDt(String nsSttlDt) {
+		MDC.put(LogConstants.MDC_KEY_NSSTTLDT, nsSttlDt);
+		return this;
+	}
+	
+	public SimpleLogger setPostingSts(String postingSts) {
+		MDC.put(LogConstants.MDC_KEY_POSTINGSTS, postingSts);
+		return this;
+	}
+	
+	public SimpleLogger setCardTp(String cardTp) {
+		MDC.put(LogConstants.MDC_KEY_CARDTP, cardTp);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrIssrCd(String dbtrIssrCd) {
+		MDC.put(LogConstants.MDC_KEY_DBTRISSRCD, dbtrIssrCd);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrIdTp(String dbtrIdTp) {
+		MDC.put(LogConstants.MDC_KEY_DBTRIDTP, dbtrIdTp);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrIdNumber(String dbtrIdNumber) {
+		MDC.put(LogConstants.MDC_KEY_DBTRIDNUMBER, dbtrIdNumber);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrAcctId(String dbtrAcctId) {
+		MDC.put(LogConstants.MDC_KEY_DBTRACCTID, dbtrAcctId);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrNm(String dbtrNm) {
+		MDC.put(LogConstants.MDC_KEY_DBTRNM, dbtrNm);
+		return this;
+	}
+	
+	public SimpleLogger setDbtrContactno(String dbtrContactno) {
+		MDC.put(LogConstants.MDC_KEY_DBTRCONTACTNO, dbtrContactno);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrIssrCd(String cdtrIssrCd) {
+		MDC.put(LogConstants.MDC_KEY_CDTRISSRCD, cdtrIssrCd);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrIdTp(String cdtrIdTp) {
+		MDC.put(LogConstants.MDC_KEY_CDTRIDTP, cdtrIdTp);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrIdNumber(String cdtrIdNumber) {
+		MDC.put(LogConstants.MDC_KEY_CDTRIDNUMBER, cdtrIdNumber);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrAcctId(String cdtrAcctId) {
+		MDC.put(LogConstants.MDC_KEY_CDTRACCTID, cdtrAcctId);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrNm(String cdtrNm) {
+		MDC.put(LogConstants.MDC_KEY_CDTRNM, cdtrNm);
+		return this;
+	}
+	
+	public SimpleLogger setCdtrContactno(String cdtrContactno) {
+		MDC.put(LogConstants.MDC_KEY_CDTRCONTACTNO, cdtrContactno);
+		return this;
+	}
+	
+	public SimpleLogger setChannleMsg(String channleMsg) {
+		MDC.put(LogConstants.MDC_KEY_CHANNLEMSG, channleMsg);
+		return this;
+	}
+	
+	public SimpleLogger setNoticeMsg(String noticeMsg) {
+		MDC.put(LogConstants.MDC_KEY_NOTICEMSG, noticeMsg);
+		return this;
+	}
+	
+	public SimpleLogger setVersionNo(String versionNo) {
+		MDC.put(LogConstants.MDC_KEY_VERSIONNO, versionNo);
+		return this;
+	}
+	
+	public SimpleLogger setExd4(String exd4) {
+		MDC.put(LogConstants.MDC_KEY_EXD4, exd4);
+		return this;
+	}
+	
+	public SimpleLogger setExd5(String exd5) {
+		MDC.put(LogConstants.MDC_KEY_EXD5, exd5);
+		return this;
+	}
+	
+	public SimpleLogger setExd6(String exd6) {
+		MDC.put(LogConstants.MDC_KEY_EXD6, exd6);
+		return this;
+	}
+	
+	public SimpleLogger setExd7(String exd7) {
+		MDC.put(LogConstants.MDC_KEY_EXD7, exd7);
+		return this;
+	}
+	
+	public SimpleLogger setExd8(String exd8) {
+		MDC.put(LogConstants.MDC_KEY_EXD8, exd8);
+		return this;
+	}
+	
+	public SimpleLogger setExd9(String exd9) {
+		MDC.put(LogConstants.MDC_KEY_EXD9, exd9);
+		return this;
+	}
+	
+	
+	
+	
+//	private void setLocalHost()
+//	{
+//		try
+//		{
+//			InetAddress addr;
+//			addr = InetAddress.getLocalHost();
+//			String ip = addr.getHostAddress();
+//		}
+//		catch(Exception e)
+//		{
+//			
+//		}
+//		finally
+//		{
+//			return 
+//		}
+//	}
+	
+	
+	public static  void reset()
+	{
+//		MDC.clear();
+		MDC.setContextMap(new HashMap<String, String>());
+	}
+	
+}

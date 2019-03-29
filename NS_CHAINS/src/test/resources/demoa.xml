@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogs>
+	<command id="demoa_testa"  class="com.crediteease.test.TestACommand" desc="testa" />
+	<group id="demoa_testgroup">
+	<!-- 注意 这里检查可能子级循环又引用了它的父级 这是非法的 -->
+		<command id="testb"  class="com.crediteease.test.TestBCommand" desc="testb" />
+		<ref  ref="testa" desc="引用testa" />
+	</group>
+	<catalog id="demoa_testService">
+		<command id="testServiceA"   class="com.crediteease.test.TestACommand" desc="又执行testA" />
+		<chain id="testService_ChainA">
+			<ref ref="testa" desc="testaa"/>
+			<ref ref="testa" desc="testbbba" />
+			<!--condition暂时不用else condition是获取传入的消息中的键值来做判断的 -->
+			<condition id="sndSmsFlag" cond="sndSmsFlag=='1'" desc="如果sndSmsFlag=1，需要下发短信">
+				<ref ref="testa" desc="下发短信通知"/>
+			</condition>
+			<ref ref="demo_testb" desc="调用组" />
+		</chain>	
+	</catalog>
+</catalogs>

@@ -1,0 +1,22 @@
+<configuration>
+	<appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<!-- in the absence of the class attribute, it is assumed that the desired 
+			discriminator type is ch.qos.logback.classic.sift.MDCBasedDiscriminator -->
+		<discriminator>
+			<key>thread-logger-key-name</key>
+			<defaultValue>unknown</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE-${thread-logger-key-name}" class="ch.qos.logback.core.FileAppender">
+				<file>/Users/liuyou/Downloads/Thread-${thread-logger-key-name}.log</file>
+				<append>false</append>
+				<layout class="ch.qos.logback.classic.PatternLayout">
+					<pattern>%d [%thread] %level %mdc %logger{35} - %msg%n</pattern>
+				</layout>
+			</appender>
+		</sift>
+	</appender>
+	<logger name="TestThreadLogger.ThreadLogger" level="INFO" additivity="false">
+		<appender-ref ref="SIFT" />
+	</logger>
+</configuration>

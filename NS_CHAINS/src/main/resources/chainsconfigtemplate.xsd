@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="catalogs">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="1" maxOccurs="unbounded" >
+				<xsd:element ref="command"  />
+				<xsd:element ref="group"/>
+				<xsd:element ref="catalog" />
+			</xsd:sequence>
+			<xsd:attribute name="desc" type="xsd:string" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="command">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string" use="required">
+			</xsd:attribute>
+			<xsd:attribute name="queuen" type="xsd:string">
+			</xsd:attribute>
+			<xsd:attribute name="desc" type="xsd:string" use="required">
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="group">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="command" minOccurs="1" maxOccurs="unbounded" />
+				<xsd:element ref="group" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="catalog">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="command" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element ref="group" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element ref="chain" minOccurs="1" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="chain">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="ref" />
+				<xsd:element ref="condition" />
+				<xsd:element ref="command" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="condition">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="ref" minOccurs="1" maxOccurs="unbounded" />
+				<xsd:element ref="command" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:string" use="required">
+			</xsd:attribute>
+			<xsd:attribute name="cond" type="xsd:string" use="required">
+			</xsd:attribute>
+			<xsd:attribute name="desc" type="xsd:string" use="required">
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="ref">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string">
+			</xsd:attribute>
+			<xsd:attribute name="ref" type="xsd:string" use="required">
+			</xsd:attribute>
+			<xsd:attribute name="desc" type="xsd:string" use="required">
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

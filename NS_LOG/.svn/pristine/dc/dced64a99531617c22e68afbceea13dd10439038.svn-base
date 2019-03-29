@@ -1,0 +1,66 @@
+package com.creditease.ns.log;
+
+import java.net.URI;
+import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.creditease.ns.log.converter.Constants;
+import com.creditease.ns.log.spi.SimpleLogger;
+
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
+
+public class SimpleLoggerTest {
+	public static void main(String[] args) 
+	{
+		URL url = Thread.currentThread().getContextClassLoader().getResource("joran_test.xml");
+		
+		//加载配置文件 然后获取logger 打印日志
+		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+
+		try {
+			JoranConfigurator configurator = new JoranConfigurator();
+			configurator.setContext(context);
+			// Call context.reset() to clear any previous configuration, e.g. default 
+			// configuration. For multi-step configuration, omit calling context.reset().
+			context.reset(); 
+			configurator.doConfigure(url.getPath());
+		} catch (JoranException je) {
+			// StatusPrinter will handle this
+			je.printStackTrace();
+			return;
+		}
+		//创建一个Logger
+		//设置要打印的关键值
+		SimpleLogger simpleLogger = SimpleLogger.getLoggerSetting();
+		simpleLogger.setBatchId("batchidDemp").setChannelMerchantId("channelMerchantIdDemo").setChannelName("channelNameDemo").setMerchantId("merchantIDDemo")
+		.setOrderId("orderIdDemo").setPayType("paytypeDemo").setResponseCodeMess("responsecodeDemo").setSystemOrderId("sysorderIdDemo").setTradeStatus("tradestatusDemo")
+		.setTxnId("txnIdDemo").setCdtrContactno("cdtrno").setChannleMsg("channelMSG")
+		.setNoticeMsg("noticeMSG").setVersionNo("versionNO").setExd4("exd4")
+		.setExd5("exd5").setExd6("exd6").setExd7("exd7").setExd8("setEXd8").setExd9("exd9");
+		//打印日志
+		SimpleLogger.log("异步流水处理", "开始处理");
+		
+		
+		//再第二个步骤打印日志
+		SimpleLogger simpleLogger2 = SimpleLogger.getLoggerSetting();
+		SimpleLogger.log("订单处理", "处理订单中\n订单信息为\r\n订单控制\r风险控制");
+		//在最后一个步骤打印日志
+		SimpleLogger.log("异常处理", "开始处理异常\n异常信息开始\r\n异常信息打印\r处理异常");
+		//防止线程重用，必须做这一步，否则可能会出现打印混乱的情况
+		SimpleLogger.reset();
+		
+		//再次使用同样的线程时
+		SimpleLogger simpleLogger3 = SimpleLogger.getLoggerSetting();
+		simpleLogger3.setBatchId("batchidDempNew").setChannelMerchantId("channelMerchantIdDemoNew").setChannelName("channelNameDemoNew").setMerchantId("merchantIDDemoNew").setChannleMsg("channelMSMMSMSM");
+		SimpleLogger.log("用户开户", "开始用户开户\n开户信息是\r\n用户信息开户\r处理用户");
+		//回收资源，必须
+		SimpleLogger.reset();
+		
+		System.out.println(context.getProperty("ISUSEREDISIDGENERATOR"));
+	}
+	
+}

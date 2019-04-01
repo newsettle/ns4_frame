@@ -1,5 +1,5 @@
 官方文档请点击：
-（https://github.com/newsettle/ns4_frame/blob/master/docs/ns4_frame%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.pdf）
+（https://github.com/newsettle/ns4_frame/blob/master/docs/ns4_frame%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3.pdf ）
 #### 2015-11-19
  #### 版本0.3.3
 1. 整个业务流程中mesageId统一
